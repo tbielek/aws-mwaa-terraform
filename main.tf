@@ -187,14 +187,24 @@ data "aws_iam_policy_document" "dags" {
   statement {
     sid = ""
     actions = [
-      "s3:PutObject*",
-      "s3:GetBucket*",
-      "s3:List*"
+      "s3:ListBucket",
+      "s3:ListObjects*",
     ]
     effect = "Allow"
     resources = [
       aws_s3_bucket.s3_bucket.arn,
-      "${aws_s3_bucket.s3_bucket.arn}/*"
+    ]
+  }
+
+  statement {
+    sid = ""
+    actions = [
+      "s3:PutObject*",
+      "s3:DeleteObject*",
+    ]
+    effect = "Allow"
+    resources = [
+      "${aws_s3_bucket.s3_bucket.arn}/dags/*"
     ]
   }
 }

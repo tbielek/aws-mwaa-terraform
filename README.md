@@ -24,7 +24,7 @@ mwaa_max_workers = 2
 
 ## DAGs
 
-There's a test DAG file inside the local [`dags` directory](./dags), which was taken from the official tutorial for [Apache Airflow v1.10.12](https://airflow.apache.org/docs/apache-airflow/1.10.12/tutorial.html#example-pipeline-definition). You can place as many DAG files inside that directory as you want and Terraform will pick them up and upload them to S3.
+There's a test DAG file inside the local [`dags` directory](./dags), which was taken from the official tutorial for [Apache Airflow v1.10.12](https://airflow.apache.org/docs/apache-airflow/1.10.12/tutorial.html#example-pipeline-definition). You can place as many DAG files inside that directory as you want and Terraform will pick them up and upload them to S3. Alternatively, you can use the DAG sync via GitHub Actions as described [below](#dag-sync-via-gitbub-actions).
 
 ## Usage
 
@@ -38,9 +38,9 @@ terraform apply
 
 Make sure to keep the terraform state files safe, as they contain your access keys to the S3 bucket.
 
-## Dag sync
+## DAG sync via GitHub Actions
 
-To use GitHub actions to sync the dags folder to S3, set up secrets via `Settings -> Secrets` and add the below variables, which you can read from the `terraform output`:
+To use GitHub actions to sync the `dags` folder to S3, we can use the workflow in `.github/workflows/sync.yml`. To allow access, set up secrets via `Settings -> Secrets` and add the below variables, which you can read from the `terraform output`:
 
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`

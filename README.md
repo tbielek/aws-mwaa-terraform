@@ -36,6 +36,8 @@ terraform plan
 terraform apply
 ```
 
+Make sure to keep the terraform state files safe, as they contain your access keys to the S3 bucket.
+
 ## Dag sync
 
 To use GitHub actions to sync the dags folder to S3, set up secrets via `Settings -> Secrets` and add the below variables, which you can read from the `terraform output`:
@@ -44,5 +46,3 @@ To use GitHub actions to sync the dags folder to S3, set up secrets via `Setting
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION`
 - `AWS_S3_BUCKET`
-
-Make sure to keep the terraform state files safe, as they now contain your access to the S3 bucket.

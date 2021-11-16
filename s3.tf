@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "s3_bucket" {
     enabled = true
   }
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = var.prefix
   })
 }

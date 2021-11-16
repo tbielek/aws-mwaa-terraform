@@ -35,3 +35,8 @@ variable "mwaa_max_workers" {
   description = "Maximum number of MWAA workers."
   default     = 2
 }
+
+variable "tags" {
+  type        = map
+  default     = {}
+}

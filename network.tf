@@ -9,7 +9,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = "${var.prefix}-vpc"
   })
 }
@@ -21,7 +21,7 @@ resource "aws_subnet" "public_subnets" {
   availability_zone       = data.aws_availability_zones.availability_zones.names[count.index]
   map_public_ip_on_launch = true
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = format("${var.prefix}-public%02d", count.index + 1)
   })
 }
@@ -33,7 +33,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone       = data.aws_availability_zones.availability_zones.names[count.index]
   map_public_ip_on_launch = false
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = format("${var.prefix}-private%02d", count.index + 1)
   })
 }
@@ -41,7 +41,7 @@ resource "aws_subnet" "private_subnets" {
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = aws_vpc.vpc.id
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = "${var.prefix}-ig"
   })
 }
@@ -50,7 +50,7 @@ resource "aws_eip" "nat_gateway_elastic_ips" {
   count = length(var.public_subnet_cidrs)
   vpc   = true
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = format("${var.prefix}-eip%02d", count.index + 1)
   })
 
@@ -62,7 +62,7 @@ resource "aws_nat_gateway" "nat_gateways" {
   allocation_id = aws_eip.nat_gateway_elastic_ips[count.index].id
   subnet_id     = aws_subnet.public_subnets[count.index].id
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = format("${var.prefix}-ngw%02d", count.index + 1)
   })
 }
@@ -75,7 +75,7 @@ resource "aws_route_table" "public_route_table" {
     gateway_id = aws_internet_gateway.internet_gateway.id
   }
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = "${var.prefix}-public"
   })
 }
@@ -95,7 +95,7 @@ resource "aws_route_table" "private_route_tables" {
     nat_gateway_id = aws_nat_gateway.nat_gateways[count.index].id
   }
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = format("${var.prefix}-private%02d", count.index + 1)
   })
 }
@@ -137,7 +137,7 @@ resource "aws_security_group" "mwaa" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.tags, {
+  tags = merge(var.tags, {
     Name = "airflow-security-group-${var.prefix}"
   })
 }

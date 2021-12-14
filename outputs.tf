@@ -51,6 +51,6 @@ output "secret_access_key" {
 }
 
 output "airflow_role" {
-  value       = aws_iam_role.arn
+  value       = aws_iam_role.airflow.arn
   description = "Arn of role attached to airflow"
 }

@@ -50,7 +50,7 @@ output "secret_access_key" {
   description = "Secret Access Key to push data to the dags bucket."
 }
 
-ouput "airflow_role" {
+output "airflow_role" {
   value       = aws_iam_role.arn
   description = "Arn of role attached to airflow"
 }

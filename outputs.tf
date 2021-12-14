@@ -49,3 +49,8 @@ output "secret_access_key" {
   value       = aws_iam_access_key.dags.secret
   description = "Secret Access Key to push data to the dags bucket."
 }
+
+ouput "airflow_role" {
+  value       = aws_iam_role.arn
+  description = "Arn of role attached to airflow"
+}

@@ -146,7 +146,7 @@ resource "aws_mwaa_environment" "mwaa_environment" {
   webserver_access_mode = "PUBLIC_ONLY"
   airflow_configuration_options {
     secrets.backend = "airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend"
-    secrets.backend_kwargs : '{"connections_prefix" : "airflow/connections", "variables_prefix" : "airflow/variables"}'
+    secrets.backend_kwargs = '{"connections_prefix" : "airflow/connections", "variables_prefix" : "airflow/variables"}'
   }
 
   network_configuration {

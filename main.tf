@@ -144,11 +144,12 @@ resource "aws_mwaa_environment" "mwaa_environment" {
   name                  = var.prefix
   max_workers           = var.mwaa_max_workers
   webserver_access_mode = "PUBLIC_ONLY"
-  airflow_configuration_options {
-    secrets.backend = "airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend"
-    secrets.backend_kwargs = jsonencode({
-      connections_prefix = "airflow/connections"
-      variables_prefix = "airflow/variables"
+  airflow_configuration_options = {
+    "secrets.backend" = "airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend"
+    "secrets.backend_kwargs" = jsonencode({
+        connections_prefix = "airflow/connections"
+        variables_prefix = "airflow/variables"
+      })
     })
   }
 

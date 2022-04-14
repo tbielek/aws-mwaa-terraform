@@ -149,7 +149,6 @@ resource "aws_mwaa_environment" "mwaa_environment" {
     "secrets.backend_kwargs" = jsonencode({
         connections_prefix = "airflow/connections"
         variables_prefix = "airflow/variables"
-      })
     })
   }
 
